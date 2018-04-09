@@ -49,7 +49,7 @@
         <span class="search-parameter" ng-repeat="param in parameters | filter:isUnsedParameter | limitTo:parametersDisplayLimit" 
           data-key="{{param.key}}"
           ng-mousedown="addSearchParam(param)">
-          {{param.name}} <i ng-class="{ plusIconClass: param.allowMultiple}"></i>
+          {{param.name}} <i ng-if="param.allowMultiple" class="{{plusIconClass}}"></i>
         </span>
     </div>
 </div>
