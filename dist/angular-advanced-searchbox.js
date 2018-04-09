@@ -37,8 +37,8 @@ angular.module('angular-advanced-searchbox', [])
                     $scope.searchIconClass = $scope.searchIconClass || 'glyphicon glyphicon-search';
                     $scope.plusIconClass = $scope.plusIconClass || 'glyphicon glyphicon-plus';
 
-                    function returnAsIs(arg0) {
-                        return arg0;
+                    function returnAsIs() {
+                        return arguments[arguments.length - 1];
                     }
 
                     $scope.parametersLabel = $scope.parametersLabel || 'Parameter Suggestions';
@@ -329,13 +329,13 @@ angular.module('angular-advanced-searchbox', [])
                                 var viewKeyKey = 'key', viewKey, viewValueKey = 'value', viewValue;
                                 // as Object is related to model and not to configuration
                                 var asObject = parameter && parameter.asObject === true;
-                                var isObject = angular.isObject(change.value);
+                                var isObject = angular.isObject(change.value) && parameter && parameter.type !== 'date';
                                 var isDefined = angular.isDefined(change.value);
                                 var isQueryMode = change.key === 'query' && angular.isUndefined(parameter);
-                                var keyTransFn = !isQueryMode && parameter.keyTransformer && angular.isFunction(parameter.keyTransformer) ? parameter.keyTransformer : returnAsIs;
-                                var valueTransFn = !isQueryMode && parameter.valueTransformer && angular.isFunction(parameter.valueTransformer) ? parameter.valueTransformer : returnAsIs;
-                                var viewKeyTransFn = !isQueryMode && parameter.viewKeyTransformer && angular.isFunction(parameter.viewKeyTransformer) ? parameter.viewKeyTransformer : returnAsIs;
-                                var viewValueTransFn = !isQueryMode && parameter.viewValueTransformer && angular.isFunction(parameter.viewValueTransformer) ? parameter.viewValueTransformer : returnAsIs;
+                                var keyTransFn = !isQueryMode && parameter && parameter.keyTransformer && angular.isFunction(parameter.keyTransformer) ? parameter.keyTransformer : returnAsIs;
+                                var valueTransFn = !isQueryMode && parameter && parameter.valueTransformer && angular.isFunction(parameter.valueTransformer) ? parameter.valueTransformer : returnAsIs;
+                                var viewKeyTransFn = !isQueryMode && parameter && parameter.viewKeyTransformer && angular.isFunction(parameter.viewKeyTransformer) ? parameter.viewKeyTransformer : returnAsIs;
+                                var viewValueTransFn = !isQueryMode && parameter && parameter.viewValueTransformer && angular.isFunction(parameter.viewValueTransformer) ? parameter.viewValueTransformer : returnAsIs;
 
                                 var value = change.value;
                                 
@@ -358,10 +358,10 @@ angular.module('angular-advanced-searchbox', [])
                                     var transformViewKey = viewKey;
                                     var transformViewValue = viewValue;
 
-                                    key = keyTransFn(transformKey);
-                                    value = valueTransFn(transformValue);
-                                    viewKey = viewKeyTransFn(transformViewKey);
-                                    viewValue = viewValueTransFn(transformViewValue);
+                                    key = keyTransFn(parameter, searchParam, transformViewKey, transformKey);
+                                    value = valueTransFn(parameter, searchParam, transformViewValue, transformValue);
+                                    viewKey = viewKeyTransFn(parameter, searchParam, transformViewKey, transformKey);
+                                    viewValue = viewValueTransFn(parameter, searchParam, transformViewValue, transformValue);
 
                                     // restore change model with new properties
                                     change.value = value;
