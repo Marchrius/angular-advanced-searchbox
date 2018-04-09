@@ -358,10 +358,10 @@ angular.module('angular-advanced-searchbox', [])
                                     var transformViewKey = viewKey;
                                     var transformViewValue = viewValue;
 
-                                    key = keyTransFn(transformKey);
-                                    value = valueTransFn(transformValue);
-                                    viewKey = viewKeyTransFn(transformViewKey);
-                                    viewValue = viewValueTransFn(transformViewValue);
+                                    key = keyTransFn(parameter, searchParam, transformViewKey, transformKey);
+                                    value = valueTransFn(parameter, searchParam, transformViewValue, transformValue);
+                                    viewKey = viewKeyTransFn(parameter, searchParam, transformViewKey, transformKey);
+                                    viewValue = viewValueTransFn(parameter, searchParam, transformViewValue, transformValue);
 
                                     // restore change model with new properties
                                     change.value = value;
