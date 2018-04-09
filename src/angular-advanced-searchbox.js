@@ -37,8 +37,8 @@ angular.module('angular-advanced-searchbox', [])
                     $scope.searchIconClass = $scope.searchIconClass || 'glyphicon glyphicon-search';
                     $scope.plusIconClass = $scope.plusIconClass || 'glyphicon glyphicon-plus';
 
-                    function returnAsIs(arg0) {
-                        return arg0;
+                    function returnAsIs() {
+                        return arguments[arguments.length - 1];
                     }
 
                     $scope.parametersLabel = $scope.parametersLabel || 'Parameter Suggestions';
